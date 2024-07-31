@@ -20,13 +20,14 @@ app.use(
 app.use("/customer/auth/*", function auth(req, res, next) {
   //Write the authenication mechanism here
   if (req.session.authorization) {
-    const token = req.session.authorization["acessToken"];
-
+    const token = req.session.authorization["accessToken"];
+    console.log(token);
     jwt.verify(token, "fingerprint_customer", (err, user) => {
       if (!err) {
         req.user = user;
         next();
       } else {
+        console.log(err);
         return res.send("This user is not authorised");
       }
     });
